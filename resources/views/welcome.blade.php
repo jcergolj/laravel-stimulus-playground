@@ -27,6 +27,12 @@
     </head>
     <body>
         <div class="content-wrapper" style="margin-left:0">
+            <div data-controller="hello">
+                <button data-action="click->hello#showMessage">
+                    Show
+                </button>
+            </div>
+            
             @include('flash')
         </div>
         

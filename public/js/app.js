@@ -35797,21 +35797,45 @@ var _class = function (_Controller) {
     _createClass(_class, [{
         key: "connect",
         value: function connect() {
+            var flash = this.flashTarget;
+            var controller = this;
+
+            document.body.addEventListener('display-flash', function (e) {
+                show(controller, e);
+            }, false);
+
+            if (controller.level !== '') {
+                flash.classList.add("alert-" + controller.level);
+                flash.classList.remove("hide");
+
+                controller.clear();
+            }
+        }
+    }, {
+        key: "show",
+        value: function show(level, message) {
+            var flash = this.flashTarget;
+
+            flash.classList.add("alert-" + level);
+            flash.classList.remove("hide");
+
+            this.level = level;
+            flash.innerHTML = message;
+        }
+    }, {
+        key: "clear",
+        value: function clear() {
             var _this2 = this;
 
             var flash = this.flashTarget;
 
-            if (this.level !== '') {
-                flash.classList.add("alert-" + this.level);
-                flash.classList.remove("hide");
+            setTimeout(function () {
+                flash.classList.add("hide");
+                flash.classList.remove("alert-" + _this2.level);
 
-                setTimeout(function () {
-                    flash.classList.add("hide");
-                    flash.innerHTML = '';
-                    flash.classList.remove("alert-" + _this2.level);
-                    _this2.level = '';
-                }, 10000);
-            }
+                flash.innerHTML = '';
+                _this2.level = '';
+            }, 5000);
         }
     }, {
         key: "level",
@@ -35832,6 +35856,12 @@ var _class = function (_Controller) {
 }(__WEBPACK_IMPORTED_MODULE_0_stimulus__["b" /* Controller */]);
 
 /* harmony default export */ __webpack_exports__["default"] = (_class);
+
+
+function show(flash, e) {
+    flash.show(e.detail.level, e.detail.message);
+    flash.clear();
+}
 
 /***/ }),
 /* 39 */
@@ -35860,16 +35890,17 @@ var _class = function (_Controller) {
     }
 
     _createClass(_class, [{
-        key: "greet",
-        value: function greet() {
-            var element = this.nameTarget;
-            var name = element.value;
-            console.log("Hello, " + name + "!");
-        }
-    }], [{
-        key: "targets",
-        get: function get() {
-            return ["name"];
+        key: "showMessage",
+        value: function showMessage() {
+            var event = new CustomEvent('display-flash', {
+                detail: {
+                    level: "success",
+                    message: 'Successful event'
+                },
+                bubbles: true,
+                cancelable: true
+            });
+            document.body.dispatchEvent(event);
         }
     }]);
 

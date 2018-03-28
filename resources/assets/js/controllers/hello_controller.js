@@ -1,13 +1,15 @@
 import { Controller } from "stimulus"
 
 export default class extends Controller {
-    static get targets() {
-        return ["name"]
-    }
-
-    greet() {
-        const element = this.nameTarget
-        const name = element.value
-        console.log(`Hello, ${name}!`)
+    showMessage() {
+        var event = new CustomEvent('display-flash', {
+            detail: {
+                level: "success",
+                message: 'Successful event',
+            },
+            bubbles: true,
+            cancelable: true
+        });
+        document.body.dispatchEvent(event);
     }
 }
