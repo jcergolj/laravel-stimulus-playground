@@ -9,15 +9,27 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        
+        <style>
+            .hide {
+                display:none;
+            }
 
+            .alert-flash {
+                position: fixed;
+                right: 25px;
+                bottom: 25px;
+                z-index: 1000;
+            }
+
+        </style>
     </head>
     <body>
-        <div data-controller="hello">
-            <input data-target="hello.name" type="text">
-            <button data-action="click->hello#greet">Greet</button>
+        <div class="content-wrapper" style="margin-left:0">
+            @include('flash')
         </div>
-
-    
+        
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
